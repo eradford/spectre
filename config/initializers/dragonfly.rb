@@ -1,4 +1,6 @@
 require 'dragonfly'
+require_relative '../../app/datastores/dragonfly/active_record_data_store'
+require_relative '../../app/datastores/dragonfly/composite_data_store'
 
 # Configure
 Dragonfly.app.configure do
@@ -8,18 +10,21 @@ Dragonfly.app.configure do
 
   url_format "/media/:job/:name"
 
-  # If you want to use S3 to store your screenshots (if you're hosting on Heroku), comment the next section
-  # and uncomment the S3 datastore section.
+  datastore CompositeDataStore.new(
+    ActiveRecordDataStore.new,
+    # If you want to use S3 to store your screenshots, comment the next section
+    # and uncomment the S3 datastore section.
+    Dragonfly::FileDataStore.new(
+      root_path: Rails.root.join('public/system/dragonfly', Rails.env),
+      server_root: Rails.root.join('public')
+    )
 
-  datastore :file,
-    root_path: Rails.root.join('public/system/dragonfly', Rails.env),
-    server_root: Rails.root.join('public')
-
-#  datastore :s3,
-#    bucket_name: 'YOUR_S3_BUCKET',
-#    access_key_id: 'YOUR_ACCESS_KEY',
-#    secret_access_key: 'YOUR_SECRET_ACCESS_KEY'
-
+    #  Dragonfly::S3DataStore.new(
+    #    bucket_name: 'YOUR_S3_BUCKET',
+    #    access_key_id: 'YOUR_ACCESS_KEY',
+    #    secret_access_key: 'YOUR_SECRET_ACCESS_KEY'
+    # )
+  )
 end
 
 # Logger
