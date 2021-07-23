@@ -12,7 +12,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', '2.2.0', group: :doc
 
 gem 'rails_admin'
 gem 'sequenced'
@@ -28,6 +28,8 @@ gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'mysql2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
